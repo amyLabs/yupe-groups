@@ -387,6 +387,19 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
                 'types' => $module->allowedExtensions,
                 'uploadPath' => $module->uploadPath,
             ],
+            'seo'                => [
+                'class'  => 'vendor.chemezov.yii-seo.behaviors.SeoActiveRecordBehavior',
+                'route'  => 'groups/groupsPost/view',
+                'params' => [
+                    'slug' => function ($data) {
+                        return $data->group->slug;
+                    },
+                    'postSlug' => function ($data) {
+                        return $data->slug;
+                    },
+
+                ],
+            ],
         ];
     }
 

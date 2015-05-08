@@ -36,7 +36,7 @@
  * The followings are the available model relations:
  * @property User $createUser
 
- * @property Post[] $posts
+ * @property GroupsPost[] $posts
  */
 class Groups extends yupe\models\YModel
 {
@@ -340,6 +340,15 @@ class Groups extends yupe\models\YModel
             'CTimestampBehavior' => [
                 'class'             => 'zii.behaviors.CTimestampBehavior',
                 'setUpdateOnCreate' => true,
+            ],
+            'seo'                => [
+                'class'  => 'vendor.chemezov.yii-seo.behaviors.SeoActiveRecordBehavior',
+                'route'  => 'groups/group/view',
+                'params' => [
+                    'slug' => function ($data) {
+                        return $data->slug;
+                    }
+                ],
             ],
         ];
     }

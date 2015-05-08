@@ -103,7 +103,7 @@ return [
     'Group was added!' => 'Группа добавлена!',
     'Group was deleted!' => 'Группа удалена!',
     'Group was updated!' => 'Группа обновлена!',
-    'Group with id = {id} was not found!' => 'Группа с id = {id} не найденв!',
+    'Group with id = {id} was not found!' => 'Группа с id = {id} не найдена!',
     'Groups' => 'Группы',
     'Groups - create' => 'Группы - добавление',
     'Groups - edit' => 'Группы - редактирование',

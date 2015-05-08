@@ -10,6 +10,21 @@ $this->breadcrumbs = [
     CHtml::encode($group->name),
 ];
 ?>
+<style>
+    .group-logo {
+        border: 1px solid #e2e2e2;
+        width: 109px;
+        height: 109px;
+        display: inline-block;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+    .group-description {
+        padding-top: 13px;
+        margin-left: 130px;
+    }
+</style>
 <div class="row">
     <div class="col-sm-12">
         <div class="group-logo pull-left">
@@ -83,5 +98,13 @@ $this->breadcrumbs = [
 <?php $this->widget('application.modules.groups.widgets.LastPostsOfGroupWidget', ['groupId' => $group->id, 'limit' => 10]); ?>
 
 <br/>
+
+<?php echo CHtml::link(
+    Yii::t('GroupsModule.groups', 'All entries for group "{group}"', ['{group}' => CHtml::encode($group->name)]),
+    ['/groups/groupsPost/posts', 'slug' => $group->slug],
+    ['class' => 'btn btn-default']
+); ?>
+
+<br/><br/>
 
 <?php $this->widget('application.modules.groups.widgets.ShareWidget'); ?>

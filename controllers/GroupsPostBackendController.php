@@ -38,7 +38,7 @@ class GroupsPostBackendController extends yupe\components\controllers\BackContro
                     'publish_time',
                     'status',
                     'comment_status',
-                    'blog_id',
+                    'group_id',
                     'tags',
                 ]
             ]
