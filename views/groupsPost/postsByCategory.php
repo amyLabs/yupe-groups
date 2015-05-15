@@ -1,11 +1,7 @@
 <?php
-/**
- * @var $this GroupsPostController
- * @var $group Groups
- */
-$this->title = [Yii::t('GroupsModule.groups', 'Posts of "{group}" group', ['{group}' => CHtml::encode($group->name)]), Yii::app()->getModule('yupe')->siteName];
-$this->metaDescription = Yii::t('GroupsModule.groups', 'Posts of "{group}" group', ['{group}' => CHtml::encode($group->name)]);
-$this->metaKeywords = $group->name;
+$this->title = [Yii::t('GroupsModule.groups', 'Posts of "{category}" category', ['{category}' => CHtml::encode($target->name)]), Yii::app()->getModule('yupe')->siteName];
+$this->metaDescription = Yii::t('GroupsModule.groups', 'Posts of "{category}" category', ['{category}' => CHtml::encode($target->name)]);
+$this->metaKeywords = $target->name;
 
 $this->breadcrumbs = [
     Yii::t('GroupsModule.groups', 'Groups') => ['/groups/group/index'],
@@ -16,8 +12,8 @@ $this->breadcrumbs = [
 
 <p><?php echo Yii::t(
         'GroupsModule.groups',
-        'Posts of "{group}" group',
-        ['{group}' => CHtml::encode($group->name)]
+        'Posts of "{category}" category',
+        ['{category}' => CHtml::encode($target->name)]
     ); ?></p>
 
 <?php $this->widget(

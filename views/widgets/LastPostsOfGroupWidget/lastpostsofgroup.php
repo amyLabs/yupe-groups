@@ -34,7 +34,7 @@
                         <?php echo CHtml::link(
                             CHtml::encode($post->group->name),
                             [
-                                '/groups/group/show/',
+                                '/groups/group/view',
                                 'slug' => CHtml::encode($post->group->slug)
                             ]
                         ); ?>
@@ -69,8 +69,12 @@
                                 <span>
                                     <?php echo CHtml::link(
                                         CHtml::encode($tag),
-                                        ['/posts/', 'tag' => CHtml::encode($tag)]
+                                        Yii::app()->createUrl('/groups/groupsPost/postsByTag', [
+                                            'slug' => $post->group->slug,
+                                            'tag' => CHtml::encode($tag)
+                                        ])
                                     ); ?>
+
                                 </span>
                             <?php endforeach; ?>
                         </span>

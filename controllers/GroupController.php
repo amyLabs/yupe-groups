@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GroupController контроллер для групп пользователей на публичной части сайта
+ * GroupController контроллер для группы пользователей на публичной части сайта
  *
  * @author yupe team <team@yupe.ru>
  * @link http://yupe.ru
@@ -12,24 +12,6 @@
  */
 class GroupController extends \yupe\components\controllers\FrontController
 {
-    /**
-     * Выводит список групп
-     *
-     * @return void
-     */
-    public function actionIndex()
-    {
-        $groups = new Groups('search');
-        $groups->unsetAttributes();
-        $groups->status = Groups::STATUS_ACTIVE;
-
-        if (isset($_GET['Groups']['name'])) {
-            $groups->name = CHtml::encode($_GET['Groups']['name']);
-        }
-
-        $this->render('index', ['groups' => $groups]);
-    }
-
     /**
      * Отобразить карточку группы
      *
@@ -61,21 +43,15 @@ class GroupController extends \yupe\components\controllers\FrontController
      *
      * @return void
      */
-    public function actionJoin()
+    public function actionJoin($slug)
     {
         if (!Yii::app()->getRequest()->getIsPostRequest() || !Yii::app()->user->isAuthenticated()) {
             throw new CHttpException(404);
         }
 
-        $groupId = (int)Yii::app()->request->getPost('groupId');
+        $group = Groups::model()->getBySlug($slug);
 
-        if (!$groupId) {
-            throw new CHttpException(404);
-        }
-
-        $group = Groups::model()->get($groupId);
-
-        if (!$group) {
+        if (null === $group) {
             throw new CHttpException(404);
         }
 
@@ -98,21 +74,15 @@ class GroupController extends \yupe\components\controllers\FrontController
      * @throw CHttpException
      * @return void
      */
-    public function actionLeave()
+    public function actionLeave($slug)
     {
         if (!Yii::app()->getRequest()->getIsPostRequest() || !Yii::app()->user->isAuthenticated()) {
             throw new CHttpException(404);
         }
 
-        $groupId = (int)Yii::app()->request->getPost('groupId');
+        $group = Groups::model()->getBySlug($slug);
 
-        if (!$groupId) {
-            throw new CHttpException(404);
-        }
-
-        $group = Groups::model()->get($groupId);
-
-        if (!$group) {
+        if (null === $group) {
             throw new CHttpException(404);
         }
 

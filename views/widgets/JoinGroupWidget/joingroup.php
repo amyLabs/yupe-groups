@@ -5,8 +5,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->getModule('groups')->ge
 <?php if (!$group->isPrivate()): ?>
     <?php if ($user->isAuthenticated()): ?>
         <?php if (false === $inGroup || GroupsMembers::STATUS_DELETED === $inGroup): ?>
-            <a class="btn btn-warning btn-sm join-group" data-id="<?php echo $group->id; ?>"
-               data-url="<?php echo Yii::app()->createUrl('/groups/group/join'); ?>"><?php echo Yii::t(
+            <a class="btn btn-warning btn-sm join-group"
+               data-url="<?php echo Yii::app()->createUrl('/groups/group/join', ['slug' => $group->slug]); ?>"><?php echo Yii::t(
                     'GroupsModule.groups',
                     'Join group'
                 ); ?></a>
@@ -14,8 +14,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->getModule('groups')->ge
             <button type="button" class="btn btn-info disabled"><?php echo Yii::t('GroupsModule.groups', 'Wait for confirmation'); ?></button>
         <?php
         else: ?>
-            <a class="btn btn-warning btn-sm leave-group" data-id="<?php echo $group->id; ?>"
-               data-url="<?php echo Yii::app()->createUrl('/groups/group/leave'); ?>"><?php echo Yii::t(
+            <a class="btn btn-warning btn-sm leave-group"
+               data-url="<?php echo Yii::app()->createUrl('/groups/group/leave', ['slug' => $group->slug]); ?>"><?php echo Yii::t(
                     'GroupsModule.groups',
                     'Leave group'
                 ); ?></a>

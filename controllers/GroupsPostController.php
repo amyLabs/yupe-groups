@@ -12,7 +12,13 @@
  */
 class GroupsPostController extends \yupe\components\controllers\FrontController
 {
-
+    /**
+     * Показываем записи группы
+     *
+     * @param  string $slug - урл поста
+     * @throws CHttpException
+     * @return void
+     */
     public function actionPosts($slug)
     {
         $group = Groups::model()->getByUrl($slug)->find();
@@ -55,35 +61,60 @@ class GroupsPostController extends \yupe\components\controllers\FrontController
      * @throws CHttpException
      * @return void
      */
-    public function actionList($tag)
+    public function actionPostsByTag($slug, $tag)
     {
-        $tag = CHtml::encode($tag);
+        $group = Groups::model()->getByUrl($slug)->find();
 
-        $posts = GroupsPost::model()->getByTag($tag);
+        if (null === $group) {
+            throw new CHttpException(404);
+        }
+
+        $posts = GroupsPost::model()->getByTag($group->id, CHtml::encode($tag));
 
         if (empty($posts)) {
             throw new CHttpException(404, Yii::t('GroupsModule.groups', 'Posts not found!'));
         }
 
-        $this->render('list', ['posts' => $posts, 'tag' => $tag]);
+        $this->render('postsByTag', ['group' => $group, 'posts' => $posts, 'tag' => $tag]);
     }
 
-    public function actionCategory($slug)
+    public function actionPostsByCategory($slug, $categorySlug)
     {
-        $category = Category::model()->getByAlias($slug);
+        $group = Groups::model()->getByUrl($slug)->find();
+
+        if (null === $group) {
+            throw new CHttpException(404);
+        }
+
+        $category = Category::model()->getByAlias($categorySlug);
 
         if (null === $category) {
             throw new CHttpException(404, Yii::t('GroupsModule.groups', 'Page was not found!'));
         }
 
-        $this->render(
-            'category-post',
-            ['target' => $category, 'posts' => GroupsPost::model()->getForCategory($category->id)]
+        $posts = GroupsPost::model()->getForCategory($group->id, $category->id);
+
+        if (empty($posts)) {
+            throw new CHttpException(404, Yii::t('GroupsModule.groups', 'Posts not found!'));
+        }
+
+        $this->render('postsByCategory',
+            [
+                'group' => $group,
+                'posts' => $posts,
+                'target' => $category
+            ]
         );
     }
 
-    public function actionCategories()
+    public function actionCategories($slug)
     {
-        $this->render('categories', ['categories' => GroupsPost::model()->getCategories()]);
+        $group = Groups::model()->getByUrl($slug)->find();
+
+        if (null === $group) {
+            throw new CHttpException(404);
+        }
+
+        $this->render('categories', ['categories' => GroupsPost::model()->getCategories($group->id)]);
     }
 }

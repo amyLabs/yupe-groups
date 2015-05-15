@@ -367,25 +367,25 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
 
         return [
             'CTimestampBehavior' => [
-                'class' => 'zii.behaviors.CTimestampBehavior',
+                'class'             => 'zii.behaviors.CTimestampBehavior',
                 'setUpdateOnCreate' => true,
             ],
-            'tags' => [
-                'class' => 'vendor.yiiext.taggable-behavior.EARTaggableBehavior',
-                'tagTable' => Yii::app()->db->tablePrefix . 'groups_tag',
-                'tagBindingTable' => Yii::app()->db->tablePrefix . 'groups_post_to_tag',
-                'tagModel' => 'Tag',
-                'modelTableFk' => 'post_id',
+            'tags'               => [
+                'class'                => 'vendor.yiiext.taggable-behavior.EARTaggableBehavior',
+                'tagTable'             => Yii::app()->db->tablePrefix . 'groups_tag',
+                'tagBindingTable'      => Yii::app()->db->tablePrefix . 'groups_post_to_tag',
+                'tagModel'             => 'GroupsTag',
+                'modelTableFk'         => 'post_id',
                 'tagBindingTableTagId' => 'tag_id',
-                'cacheID' => 'cache',
+                'cacheID'              => 'cache',
             ],
-            'imageUpload' => [
-                'class' => 'yupe\components\behaviors\ImageUploadBehavior',
+            'imageUpload'        => [
+                'class'         => 'yupe\components\behaviors\ImageUploadBehavior',
                 'attributeName' => 'image',
-                'minSize' => $module->minSize,
-                'maxSize' => $module->maxSize,
-                'types' => $module->allowedExtensions,
-                'uploadPath' => $module->uploadPath,
+                'minSize'       => $module->minSize,
+                'maxSize'       => $module->maxSize,
+                'types'         => $module->allowedExtensions,
+                'uploadPath'    => $module->uploadPath,
             ],
             'seo'                => [
                 'class'  => 'vendor.chemezov.yii-seo.behaviors.SeoActiveRecordBehavior',
@@ -659,13 +659,13 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
      * @param array $with
      * @return mixed
      */
-    public function getByTag($tag, array $with = ['group', 'createUser', 'commentsCount'])
+    public function getByTag($groupId, $tag, array $with = ['group', 'createUser', 'commentsCount'])
     {
         return GroupsPost::model()->with($with)
             ->published()
             ->public()
             ->sortByPubDate('DESC')
-            ->taggedWith($tag)->findAll();
+            ->taggedWith($tag)->findAllByAttributes(['group_id' => $groupId]);
     }
 
     /**
@@ -687,10 +687,11 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
      * @param $categoryId
      * @return GroupsPost
      */
-    public function getForCategory($categoryId)
+    public function getForCategory($groupId, $categoryId)
     {
         $posts = new GroupsPost('search');
         $posts->unsetAttributes();
+        $posts->group_id = $groupId;
         $posts->category_id = (int)$categoryId;
         $posts->status = GroupsPost::STATUS_PUBLISHED;
         $posts->access_type = GroupsPost::ACCESS_PUBLIC;
@@ -701,13 +702,15 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
     /**
      * @return mixed
      */
-    public function getCategories()
+    public function getCategories($groupId)
     {
         return Yii::app()->db->createCommand()
-            ->select('cc.name, bp.category_id, count(bp.id) cnt, cc.alias, cc.description')
+            ->select('cc.name, bp.category_id, count(bp.id) cnt, cc.slug, cc.description')
             ->from('yupe_groups_post bp')
             ->join('yupe_category_category cc', 'bp.category_id = cc.id')
-            ->where('bp.category_id IS NOT NULL')
+            ->where('bp.group_id = :group AND bp.category_id IS NOT NULL', [
+                ':group' => $groupId,
+            ])
             ->group('bp.category_id')
             ->having('cnt > 0')
             ->order('cnt DESC')

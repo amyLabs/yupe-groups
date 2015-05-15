@@ -2,9 +2,7 @@ $(document).ready(function ($) {
     $('.join-group').on('click', function (event) {
         event.preventDefault();
         var $button = $(this);
-        var data = {
-            'groupId': parseInt($(this).data('id'))
-        };
+        var data = {};
         data[yupeTokenName] = yupeToken;
         $.post($(this).data('url'), data, function (response) {
             if (response.result) {
@@ -19,9 +17,7 @@ $(document).ready(function ($) {
     $('.leave-group').on('click', function (event) {
         event.preventDefault();
         var $button = $(this);
-        var data = {
-            'groupId': parseInt($(this).data('id'))
-        };
+        var data = {};
         data[yupeTokenName] = yupeToken;
         $.post($(this).data('url'), data, function (response) {
             if (response.result) {
