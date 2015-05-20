@@ -7,7 +7,7 @@ $this->description = Yii::t(
 );
 $this->keywords = Yii::t('GroupsModule.groups', 'Members');
 $this->breadcrumbs = [
-    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/group/index'],
+    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/groups/index'],
     CHtml::encode($group->name)         => ['/groups/group/view', 'slug' => CHtml::encode($group->slug)],
     Yii::t('UserModule.user', 'Users'),
 ];

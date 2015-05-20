@@ -6,13 +6,10 @@ $this->keywords = Yii::t('GroupsModule.groups', 'Groups');
 
 <?php $this->breadcrumbs = [Yii::t('GroupsModule.groups', 'Groups')]; ?>
 
-<?php $form = $this->beginWidget(
-    'bootstrap.widgets.TbActiveForm',
-    [
-        'method' => 'get',
-        'type'   => 'vertical'
-    ]
-); ?>
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
+    'method' => 'get',
+    'type'   => 'vertical'
+]); ?>
 
 <div class="row">
     <div class="col-sm-12">

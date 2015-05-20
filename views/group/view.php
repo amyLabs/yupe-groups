@@ -1,30 +1,15 @@
 <?php
+Yii::app()->clientScript->registerCssFile(Yii::app()->getModule('groups')->getAssetsUrl() . '/css/group.css');
+
 $this->pageTitle = CHtml::encode($group->name);
 $this->description = CHtml::encode($group->name);
 $this->keywords = CHtml::encode($group->name);
-?>
 
-<?php
 $this->breadcrumbs = [
-    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/group/index/'],
+    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/groups/index/'],
     CHtml::encode($group->name),
 ];
 ?>
-<style>
-    .group-logo {
-        border: 1px solid #e2e2e2;
-        width: 109px;
-        height: 109px;
-        display: inline-block;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
-    }
-    .group-description {
-        padding-top: 13px;
-        margin-left: 130px;
-    }
-</style>
 <div class="row">
     <div class="col-sm-12">
         <div class="group-logo pull-left">
@@ -39,7 +24,6 @@ $this->breadcrumbs = [
         </div>
         <div class="group-description">
             <div class="group-description-name">
-
                 <?php echo CHtml::link(
                     CHtml::encode($group->name),
                     ['/group/post/group/', 'slug' => CHtml::encode($group->slug)]

@@ -196,7 +196,6 @@ class Groups extends yupe\models\YModel
      * Условие для получения группы по url
      *
      * @param string $url - url данного группы
-     *
      * @return self
      */
     public function getByUrl($url = null)
@@ -243,26 +242,26 @@ class Groups extends yupe\models\YModel
         return [
             'id'          => Yii::t('GroupsModule.groups', 'Post id.'),
             'name'        => Yii::t(
-                    'GroupsModule.groups',
-                    'Please enter a title of the group. For example: <span class="label label-default">My travel notes</span>.'
-                ),
+                'GroupsModule.groups',
+                'Please enter a title of the group. For example: <span class="label label-default">My travel notes</span>.'
+            ),
             'description' => Yii::t(
-                    'GroupsModule.groups',
-                    'Please enter a short description of the group. For example:<br /><br /> <pre>Notes on my travel there and back again. Illustrated.</pre>'
-                ),
+                'GroupsModule.groups',
+                'Please enter a short description of the group. For example:<br /><br /> <pre>Notes on my travel there and back again. Illustrated.</pre>'
+            ),
             'icon'        => Yii::t('GroupsModule.groups', 'Please choose an icon for the group.'),
             'slug'        => Yii::t(
-                    'GroupsModule.groups',
-                    'Please enter an URL-friendly name for the group.<br /><br /> For example: <pre>http://site.ru/groups/<span class="label label-default">travel-notes</span>/</pre> If you don\'t know how to fill this field you can leave it empty.'
-                ),
+                'GroupsModule.groups',
+                'Please enter an URL-friendly name for the group.<br /><br /> For example: <pre>http://site.ru/groups/<span class="label label-default">travel-notes</span>/</pre> If you don\'t know how to fill this field you can leave it empty.'
+            ),
             'type'        => Yii::t(
-                    'GroupsModule.groups',
-                    'Please choose a type of the group:<br /><br /><span class="label label-success">public</span> &ndash; anyone can create posts<br /><br /><span class="label label-info">private</span> &ndash; only you can create posts'
-                ),
+                'GroupsModule.groups',
+                'Please choose a type of the group:<br /><br /><span class="label label-success">public</span> &ndash; anyone can create posts<br /><br /><span class="label label-info">private</span> &ndash; only you can create posts'
+            ),
             'status'      => Yii::t(
-                    'GroupsModule.groups',
-                    'Please choose a status of the group:<br /><br /><span class="label label-success">active</span> &ndash; The group will be visible and it will be possible to create new records<br /><br /><span class="label label-warning">blocked</span> &ndash; The group will be visible but it would not be possible to create new records<br /><br /><span class="label label-danger">removed</span> &ndash; The group will be invisible'
-                ),
+                'GroupsModule.groups',
+                'Please choose a status of the group:<br /><br /><span class="label label-success">active</span> &ndash; The group will be visible and it will be possible to create new records<br /><br /><span class="label label-warning">blocked</span> &ndash; The group will be visible but it would not be possible to create new records<br /><br /><span class="label label-danger">removed</span> &ndash; The group will be invisible'
+            ),
         ];
     }
 
@@ -680,9 +679,15 @@ class Groups extends yupe\models\YModel
             ]);
     }
 
+    /**
+     * получаем список групп, в которых пользователь может добавлять записи
+     */
     public function getListForUser($userId)
     {
-        return CMap::mergeArray($this->getMembershipListForUser($userId), $this->getPrivateGroupsForUser($userId));
+        return CMap::mergeArray(
+            $this->getMembershipListForUser($userId),
+            $this->getPrivateGroupsForUser($userId)
+        );
     }
 
 }

@@ -1,8 +1,4 @@
 <?php
-/**
- * @var $this GroupsPostController
- */
-
 $this->title = [$post->title, Yii::app()->getModule('yupe')->siteName];
 $this->metaDescription = !empty($post->description) ? $post->description : strip_tags($post->getQuote());
 $this->metaKeywords = !empty($post->keywords) ? $post->keywords : implode(', ', $post->getTags());
@@ -16,7 +12,7 @@ Yii::app()->clientScript->registerScript(
 );
 
 $this->breadcrumbs = [
-    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/group/index'],
+    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/groups/index'],
     CHtml::encode($post->group->name) => ['/groups/group/view', 'slug' => CHtml::encode($post->group->slug)],
     Yii::t('GroupsModule.groups', 'Records') => ['/groups/groupsPost/posts', 'slug' => $post->group->slug],
     $post->title,

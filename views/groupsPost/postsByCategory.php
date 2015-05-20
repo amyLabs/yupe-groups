@@ -4,7 +4,7 @@ $this->metaDescription = Yii::t('GroupsModule.groups', 'Posts of "{category}" ca
 $this->metaKeywords = $target->name;
 
 $this->breadcrumbs = [
-    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/group/index'],
+    Yii::t('GroupsModule.groups', 'Groups') => ['/groups/groups/index'],
     CHtml::encode($group->name)         => ['/groups/group/view', 'slug' => CHtml::encode($group->slug)],
     Yii::t('GroupsModule.groups', 'Records'),
 ];

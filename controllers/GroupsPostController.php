@@ -13,6 +13,35 @@
 class GroupsPostController extends \yupe\components\controllers\FrontController
 {
     /**
+     * Возвращает модель группы
+     * @param $slug
+     * @return mixed
+     * @throws CHttpException
+     */
+    private function loadModel($slug)
+    {
+        $group = Groups::model()->getBySlug($slug);
+
+        if ($group === null) {
+            throw new CHttpException(404, Yii::t(
+                'GroupsModule.groups',
+                'Group "{group}" was not found!',
+                ['{group}' => $slug]
+            ));
+        }
+
+        if ( $group->type == Groups::TYPE_PRIVATE && !$group->userIn(Yii::app()->getUser()->getId()) ) {
+            throw new CHttpException(403, Yii::t(
+                'GroupsModule.groups',
+                'Group "{group}" is private. To view you must be a member of!',
+                ['{group}' => $group->name]
+            ));
+        }
+
+        return $group;
+    }
+
+    /**
      * Показываем записи группы
      *
      * @param  string $slug - урл поста
@@ -21,12 +50,7 @@ class GroupsPostController extends \yupe\components\controllers\FrontController
      */
     public function actionPosts($slug)
     {
-        $group = Groups::model()->getByUrl($slug)->find();
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
-
+        $group = $this->loadModel($slug);
         $this->render('posts', ['group' => $group, 'posts' => $group->getPosts()]);
     }
 
@@ -39,11 +63,7 @@ class GroupsPostController extends \yupe\components\controllers\FrontController
      */
     public function actionView($slug, $postSlug)
     {
-        $group = Groups::model()->getByUrl($slug)->find();
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
+        $this->loadModel($slug);
 
         $post = GroupsPost::model()->get($postSlug, ['group', 'createUser', 'comments.author']);
 
@@ -63,12 +83,7 @@ class GroupsPostController extends \yupe\components\controllers\FrontController
      */
     public function actionPostsByTag($slug, $tag)
     {
-        $group = Groups::model()->getByUrl($slug)->find();
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
-
+        $group = $this->loadModel($slug);
         $posts = GroupsPost::model()->getByTag($group->id, CHtml::encode($tag));
 
         if (empty($posts)) {
@@ -80,12 +95,7 @@ class GroupsPostController extends \yupe\components\controllers\FrontController
 
     public function actionPostsByCategory($slug, $categorySlug)
     {
-        $group = Groups::model()->getByUrl($slug)->find();
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
-
+        $group = $this->loadModel($slug);
         $category = Category::model()->getByAlias($categorySlug);
 
         if (null === $category) {
@@ -109,12 +119,7 @@ class GroupsPostController extends \yupe\components\controllers\FrontController
 
     public function actionCategories($slug)
     {
-        $group = Groups::model()->getByUrl($slug)->find();
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
-
+        $group = $this->loadModel($slug);
         $this->render('categories', ['categories' => GroupsPost::model()->getCategories($group->id)]);
     }
 }

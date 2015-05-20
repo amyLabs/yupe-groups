@@ -142,7 +142,7 @@ $this->menu = Yii::app()->getModule('groups')->getNavigation();
             ],
             [
                 'header' => Yii::t('GroupsModule.groups', 'Members'),
-                'value'  => 'CHtml::link($data->membersCount, array("/groups/userToGroupsBackend/index","UserToGroups[groups_id]" => $data->id ))',
+                'value'  => 'CHtml::link($data->membersCount, array("/groups/groupsMembersBackend/index","GroupsMembers[group_id]" => $data->id ))',
                 'type'   => 'html'
             ],
             [

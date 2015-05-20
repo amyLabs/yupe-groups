@@ -179,7 +179,7 @@ return [
     'Please choose an icon for the group.' => 'Выберите файл с иконкой, которая будет отображаться рядом с названием группы.',
     'Please choose id of the group.' => 'Выберите необходимый группу сайта.',
     'Please choose a status of the group:<br /><br /><span class="label label-success">active</span> &ndash; The group will be visible and it will be possible to create new records<br /><br /><span class="label label-warning">blocked</span> &ndash; The group will be visible but it would not be possible to create new records<br /><br /><span class="label label-danger">removed</span> &ndash; The group will be invisible' => 'Установите статус группы:<br /><br /><span class="label label-success">активен</span> &ndash; группа будет отображаться в списке групп и будет доступен для создания постов.<br /><br /><span class="label label-warning">заблокирован</span> &ndash; группа будет отображаться в списках, но создавать в нем посты будет запрещено.<br /><br /><span class="label label-danger">удален</span> &ndash; группа пропадет из списков и будет недоступен.',
-    'Please choose a type of the group:<br /><br /><span class="label label-success">public</span> &ndash; anyone can create posts<br /><br /><span class="label label-info">private</span> &ndash; only you can create posts' => 'Выберите тип группы:<br /><br /><span class="label label-success">публиничный</span> &ndash; любой пользователь может создавать посты в этом группе.<br /><br /><span class="label label-info">личный</span> &ndash; только Вы, как создатель группы, можете создавать посты.',
+    'Please choose a type of the group:<br /><br /><span class="label label-success">public</span> &ndash; anyone can create posts<br /><br /><span class="label label-info">private</span> &ndash; only you can create posts' => 'Выберите тип группы:<br /><br /><span class="label label-success">открытая</span> &ndash; любой пользователь может просматривать эту группу.<br /><br /><span class="label label-info">закрытая</span> &ndash; только пользователи группы могут просматривать страницу группы, посты и т.д.',
     'Please choose status of the member:<br /><br /><span class="label label-success">Active</span> &ndash; Active member of the group.<br /><br /><span class="label label-warning">blocked</span> &ndash; Cannot access the group.' => 'Установите статус участника группы:<br /><br /><span class="label label-success">Активен</span> &ndash; данный пользователь будет активным участиком.<br /><br /><span class="label label-warning">заблокирован</span> &ndash; данный участнику не будут доступны функции группы.',
     'Please choose user role:<br /><br /><span class="label label-success">User</span> &ndash; Can write and comment group posts.<br /><br /><span class="label label-warning">Moderator</span> &ndash; Can delete, edit or block posts and comments. Can ban, add or remove members.<br /><br /><span class="label label-danger">Administrator</span> &ndash; Can block, add or remove groups and members.' => 'Установите роль участника группы:<br /><br /><span class="label label-success">Пользователь</span> &ndash; имеет возможность писать записи в группе и комментировать их.<br /><br /><span class="label label-warning">Модератор</span> &ndash; к правам пользователя добавляется возможность модерировать (удалять, править, блокировать) записи и комментарии, (блокировать, добавлять, удалять) пользователей.<br /><br /><span class="label label-danger">Администратор</span> &ndash; к правам модератора добавляется возможность (блокировать, добавлять, удалять) группы и пользоватилей.',
     'Please choose a user which will become the member of the group' => 'Выберите пользователя системы, который станет участником группы.',
@@ -203,8 +203,8 @@ return [
     'Posts - view' => 'Записи - просмотр',
     'Manage posts' => 'Управление записями',
     'Post list' => 'Список записей',
-    'Private' => 'Личный',
-    'Public' => 'Публичный',
+    'Private' => 'Закрытая',
+    'Public' => 'Открытая',
     'Publish date' => 'Дата публикации',
     'Publish date, formatted as:<br /><span class="label label-default">05-09-2012</span>' => 'Дата публикации, формат:<br /><span class="label label-default">05-09-2012</span>',
     'Publish time' => 'Время публикации',
@@ -295,4 +295,5 @@ return [
     'Editing member' => 'Редактирование участника',
     'Viewing member' => 'Просмотр участника',
     'About author' => 'Об авторе',
+    'Group "{group}" is private. To view you must be a member of!' => 'Группа "{group}" приватная. Для просмотра необходимо быть участником группы!'
 ];

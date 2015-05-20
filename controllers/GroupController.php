@@ -13,14 +13,12 @@
 class GroupController extends \yupe\components\controllers\FrontController
 {
     /**
-     * Отобразить карточку группы
-     *
-     * @param  string $slug - url группы
+     * Возвращает модель группы
+     * @param $slug
+     * @return mixed
      * @throws CHttpException
-     *
-     * @return void
      */
-    public function actionView($slug = null)
+    private function loadModel($slug)
     {
         $group = Groups::model()->getBySlug($slug);
 
@@ -32,6 +30,28 @@ class GroupController extends \yupe\components\controllers\FrontController
             ));
         }
 
+        if ( $group->type == Groups::TYPE_PRIVATE && !$group->userIn(Yii::app()->getUser()->getId()) ) {
+            throw new CHttpException(403, Yii::t(
+                'GroupsModule.groups',
+                'Group "{group}" is private. To view you must be a member of!',
+                ['{group}' => $group->name]
+            ));
+        }
+
+        return $group;
+    }
+    
+    /**
+     * Отобразить карточку группы
+     *
+     * @param  string $slug - url группы
+     * @throws CHttpException
+     *
+     * @return void
+     */
+    public function actionView($slug = null)
+    {
+        $group = $this->loadModel($slug);
         $this->render('view', ['group' => $group]);
     }
 
@@ -48,13 +68,7 @@ class GroupController extends \yupe\components\controllers\FrontController
         if (!Yii::app()->getRequest()->getIsPostRequest() || !Yii::app()->user->isAuthenticated()) {
             throw new CHttpException(404);
         }
-
-        $group = Groups::model()->getBySlug($slug);
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
-
+        $group = $this->loadModel($slug);
         if ($group->join(Yii::app()->user->getId())) {
             Yii::app()->ajax->success(Yii::t('GroupsModule.groups', 'You have joined!'));
         }
@@ -80,12 +94,7 @@ class GroupController extends \yupe\components\controllers\FrontController
             throw new CHttpException(404);
         }
 
-        $group = Groups::model()->getBySlug($slug);
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
-
+        $group = $this->loadModel($slug);
         if ($group->leave(Yii::app()->user->getId())) {
             Yii::app()->ajax->success(Yii::t('GroupsModule.groups', 'You left the group!'));
         }
@@ -99,12 +108,7 @@ class GroupController extends \yupe\components\controllers\FrontController
      */
     public function actionMembers($slug)
     {
-        $group = Groups::model()->getBySlug($slug);
-
-        if (null === $group) {
-            throw new CHttpException(404);
-        }
-
+        $group = $this->loadModel($slug);
         $this->render('members', ['group' => $group, 'members' => $group->getMembersList()]);
     }
 }

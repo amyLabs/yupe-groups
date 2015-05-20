@@ -1,3 +1,6 @@
+<?php
+Yii::app()->clientScript->registerCssFile(Yii::app()->getModule('groups')->getAssetsUrl() . '/css/group.css');
+?>
 <div class="row">
     <div class="col-sm-2">
         <?php echo CHtml::image(
@@ -6,12 +9,15 @@
             ['width' => 64, 'height' => 64, 'class' => 'thumbnail']
         ); ?>
     </div>
-    <div class="col-sm-6 blog-info">
-
+    <div class="col-sm-6 group-info">
+        <?php if ($data->type == Groups::TYPE_PRIVATE) : ?>
+            <i class="glyphicon glyphicon-lock"></i>
+        <?php endif; ?>
         <h2><?php echo CHtml::link(
-                CHtml::encode($data->name),
-                ['/groups/group/view/', 'slug' => CHtml::encode($data->slug)]
-            ); ?></h2>
+            CHtml::encode($data->name),
+            ['/groups/group/view/', 'slug' => CHtml::encode($data->slug)]
+        ); ?></h2>
+        <br/>
         <?php echo CHtml::image(
             $data->createUser->getAvatar(24),
             CHtml::encode($data->createUser->nick_name)
