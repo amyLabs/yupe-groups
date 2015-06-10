@@ -29,4 +29,33 @@ class GroupsController extends \yupe\components\controllers\FrontController
 
         $this->render('index', ['groups' => $groups]);
     }
+
+    public function actionCreate()
+    {
+        $model = new Groups();
+        $data = Yii::app()->getRequest()->getPost('Groups');
+
+        if (Yii::app()->getRequest()->getIsPostRequest() && $data !== null)
+        {
+            $model->setAttributes($data);
+            $model->status = Groups::STATUS_MODERATED;
+            $model->member_status = GroupsMembers::STATUS_ACTIVE;
+            $model->post_status = GroupsPost::STATUS_MODERATED;
+
+            if ($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
+                    Yii::t('GroupsModule.groups', 'Group was added!')
+                );
+                $this->redirect(
+                    (array)Yii::app()->getRequest()->getPost(
+                        'submit-type',
+                        ['index']
+                    )
+                );
+            }
+        }
+        $this->render('create', ['model' => $model]);
+    }
 }

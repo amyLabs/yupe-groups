@@ -16,6 +16,7 @@ return [
     'rules'     => [
         //groups
         '/groups'                                     => 'groups/groups/index',
+        '/groups/create'                              => 'groups/groups/create',
         //group
         '/group/<slug>'                               => 'groups/group/view',
         '/group/<slug>/join'                          => 'groups/group/join',

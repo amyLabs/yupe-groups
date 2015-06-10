@@ -114,6 +114,7 @@ return [
     'Comments' => 'Комментарии',
     'Content' => 'Контент',
     'Create' => 'Создать',
+    'Create group' => 'Добавить группу',
     'Create group and close' => 'Добавить группу и закрыть',
     'Create group and continue' => 'Добавить группу и продолжить',
     'Create date' => 'Дата создания',

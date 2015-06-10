@@ -119,9 +119,10 @@ $this->menu = Yii::app()->getModule('groups')->getNavigation();
                 'url'     => $this->createUrl('/groups/groupsBackend/inline'),
                 'source'  => $model->getStatusList(),
                 'options' => [
-                    Groups::STATUS_ACTIVE  => ['class' => 'label-success'],
-                    Groups::STATUS_BLOCKED => ['class' => 'label-default'],
-                    Groups::STATUS_DELETED => ['class' => 'label-danger'],
+                    Groups::STATUS_ACTIVE    => ['class' => 'label-success'],
+                    Groups::STATUS_BLOCKED   => ['class' => 'label-default'],
+                    Groups::STATUS_DELETED   => ['class' => 'label-danger'],
+                    Groups::STATUS_MODERATED => ['class' => 'label-warning'],
                 ],
             ],
             [

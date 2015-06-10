@@ -41,25 +41,17 @@
 class Groups extends yupe\models\YModel
 {
     /**
-     *
+     * Константы статусов
      */
     const STATUS_BLOCKED = 0;
-    /**
-     *
-     */
     const STATUS_ACTIVE = 1;
-    /**
-     *
-     */
     const STATUS_DELETED = 2;
+    const STATUS_MODERATED = 3;
 
     /**
-     *
+     * Константы типов
      */
     const TYPE_PUBLIC = 1;
-    /**
-     *
-     */
     const TYPE_PRIVATE = 2;
 
     /**
@@ -400,9 +392,10 @@ class Groups extends yupe\models\YModel
     public function getStatusList()
     {
         return [
-            self::STATUS_BLOCKED => Yii::t('GroupsModule.groups', 'Blocked'),
-            self::STATUS_ACTIVE  => Yii::t('GroupsModule.groups', 'Active'),
-            self::STATUS_DELETED => Yii::t('GroupsModule.groups', 'Removed'),
+            self::STATUS_BLOCKED   => Yii::t('GroupsModule.groups', 'Blocked'),
+            self::STATUS_ACTIVE    => Yii::t('GroupsModule.groups', 'Active'),
+            self::STATUS_DELETED   => Yii::t('GroupsModule.groups', 'Removed'),
+            self::STATUS_MODERATED => Yii::t('GroupsModule.groups', 'Moderated'),
         ];
     }
 
@@ -689,5 +682,4 @@ class Groups extends yupe\models\YModel
             $this->getPrivateGroupsForUser($userId)
         );
     }
-
 }
