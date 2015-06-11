@@ -100,7 +100,11 @@ class GroupsBackendController extends yupe\components\controllers\BackController
 
         if (Yii::app()->getRequest()->getIsPostRequest() && Yii::app()->getRequest()->getPost('Groups') !== null) {
             $model->setAttributes(Yii::app()->getRequest()->getPost('Groups'));
-            if ($model->save()) {
+            if ($model->save())
+            {
+                if (Yii::app()->getRequest()->getPost('group-approve')!== null) {
+                    $model->approve();
+                }
                 Yii::app()->user->setFlash(
                     yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
                     Yii::t('GroupsModule.groups', 'Group was updated!')

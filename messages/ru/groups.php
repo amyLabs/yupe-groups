@@ -18,10 +18,6 @@
  */
 return [
     'This module allows you to combine users into groups' => 'Этот модуль позволять объединяться пользователям в группы',
-
-
-
-
     'Group is empty!' => 'Выберите группу!',
     'Moderation' => 'На модерации',
     'Publish' => 'Опубликовать',
@@ -296,5 +292,6 @@ return [
     'Editing member' => 'Редактирование участника',
     'Viewing member' => 'Просмотр участника',
     'About author' => 'Об авторе',
-    'Group "{group}" is private. To view you must be a member of!' => 'Группа "{group}" приватная. Для просмотра необходимо быть участником группы!'
+    'Group "{group}" is private. To view you must be a member of!' => 'Группа "{group}" приватная. Для просмотра необходимо быть участником группы!',
+    'Approve' => 'Утвердить',
 ];

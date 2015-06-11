@@ -193,6 +193,22 @@
     </div>
 </div>
 
+<?php if ( $model->status == Groups::STATUS_MODERATED ) : ?>
+
+    <?php $this->widget(
+        'bootstrap.widgets.TbButton',
+        [
+            'buttonType'  => 'submit',
+            'context'     => 'success',
+            'label'       => Yii::t('GroupsModule.groups', 'Approve'),
+            'htmlOptions' => [
+                'name' => 'group-approve'
+            ]
+        ]
+    ); ?>
+
+<?php endif; ?>
+
 <?php $this->widget(
     'bootstrap.widgets.TbButton',
     [

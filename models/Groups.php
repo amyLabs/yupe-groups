@@ -507,9 +507,9 @@ class Groups extends yupe\models\YModel
      * @param $userId
      * @return bool
      */
-    public function join($userId)
+    public function join($userId, $backendFlag = false)
     {
-        if ($this->isPrivate()) {
+        if ($backendFlag == false && $this->isPrivate()) {
             return false;
         }
 
@@ -681,5 +681,33 @@ class Groups extends yupe\models\YModel
             $this->getMembershipListForUser($userId),
             $this->getPrivateGroupsForUser($userId)
         );
+    }
+
+    /**
+     * Утверждаем группу
+     * @return bool
+     */
+    public function approve()
+    {
+         $transaction = Yii::app()->db->beginTransaction();
+        try
+        {
+            $this->status = self::STATUS_ACTIVE;
+            if($this->save() && $this->join($this->create_user_id, true))
+            {
+                $transaction->commit();
+                Yii::app()->user->setFlash(
+                    yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
+                    Yii::t('GroupsModule.groups', 'Group was approved!')
+                );
+            }
+        }
+        catch(Exception $e)
+        {
+            $transaction->rollback();
+            Yii::log($e->__toString(), CLogger::LEVEL_ERROR);
+        }
+
+        return true;
     }
 }
