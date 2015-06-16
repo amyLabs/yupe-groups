@@ -23,6 +23,7 @@ return [
         '/group/<slug>/leave'                         => 'groups/group/leave',
         '/group/<slug>/members'                       => 'groups/group/members',
         //groupsPost
+        '/group/<slug>/addPost'                       => 'groups/groupsPost/create',
         '/group/<slug>/posts'                         => 'groups/groupsPost/posts',
         '/group/<slug>/post/<postSlug>.html'          => 'groups/groupsPost/view',
         '/group/<slug>/posts/tag/<tag>'               => 'groups/groupsPost/postsByTag',

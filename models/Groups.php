@@ -507,7 +507,7 @@ class Groups extends yupe\models\YModel
      * @param $userId
      * @return bool
      */
-    public function join($userId, $backendFlag = false)
+    public function join($userId, $userRole = GroupsMembers::ROLE_USER, $backendFlag = false)
     {
         if ($backendFlag == false && $this->isPrivate()) {
             return false;
@@ -526,6 +526,7 @@ class Groups extends yupe\models\YModel
             $member->group_id = $this->id;
             $member->user_id = (int)$userId;
             $member->status = (int)$this->member_status;
+            $member->role = $userRole;
 
         } else {
 
@@ -693,7 +694,7 @@ class Groups extends yupe\models\YModel
         try
         {
             $this->status = self::STATUS_ACTIVE;
-            if($this->save() && $this->join($this->create_user_id, true))
+            if($this->save() && $this->join($this->create_user_id,GroupsMembers::ROLE_ADMIN,true))
             {
                 $transaction->commit();
                 Yii::app()->user->setFlash(

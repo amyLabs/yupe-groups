@@ -98,19 +98,18 @@ $this->breadcrumbs = [
     </div>
 </div>
 
-
 <?php $this->widget('application.modules.groups.widgets.ShareWidget'); ?>
 
 <hr/>
 
-<div class="comments-section">
-
-    <?php $this->widget('application.modules.comment.widgets.CommentsWidget', [
-        'redirectTo' => $post->getUrl(),
-        'model' => $post,
-    ]); ?>
-
-</div>
+<?php if ($post->comment_status == GroupsPost::COMMENT_YES): ?>
+    <div class="comments-section">
+        <?php $this->widget('application.modules.comment.widgets.CommentsWidget', [
+            'redirectTo' => $post->getUrl(),
+            'model' => $post,
+        ]); ?>
+    </div>
+<?php endif; ?>
 
 <script type="text/javascript">
     $(document).ready(function () {

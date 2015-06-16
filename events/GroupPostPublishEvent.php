@@ -8,7 +8,7 @@ class GroupPostPublishEvent extends Event
 
     protected $user;
 
-    public function __construct(GroupPost $groupPost, IWebUser $user)
+    public function __construct(GroupsPost $groupPost, IWebUser $user)
     {
         $this->groupPost = $groupPost;
         $this->user = $user;

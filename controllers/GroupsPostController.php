@@ -42,6 +42,38 @@ class GroupsPostController extends \yupe\components\controllers\FrontController
     }
 
     /**
+     * Добавляем запись в группу
+     *
+     * @param $slug
+     * @throws CHttpException
+     */
+    public function actionCreate($slug)
+    {
+        $group = $this->loadModel($slug);
+        $model = new GroupsPost();
+        $data = Yii::app()->getRequest()->getPost('GroupsPost');
+
+        if (Yii::app()->getRequest()->getIsPostRequest() && $data !== null)
+        {
+            $model->setAttributes($data);
+            $model->group_id = $group->id;
+            $model->publish_time = date('d-m-Y H:i');
+            $model->status = GroupsPost::STATUS_DRAFT;
+            $model->tags = Yii::app()->getRequest()->getPost('tags');
+
+            if ($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
+                    Yii::t('GroupsModule.groups', 'Post was created!')
+                );
+                $this->redirect(['/groups/group/view', 'slug' => CHtml::encode($group->slug)]);
+            }
+        }
+        $this->render('create', ['group' => $group, 'model' => $model]);
+    }
+
+    /**
      * Показываем записи группы
      *
      * @param  string $slug - урл поста

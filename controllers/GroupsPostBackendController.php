@@ -72,12 +72,12 @@ class GroupsPostBackendController extends yupe\components\controllers\BackContro
     {
         $model = new GroupsPost();
 
-        $model->publish_time = date('d-m-Y h:i');
+        $model->publish_time = date('d-m-Y H:i');
+        $data = Yii::app()->getRequest()->getPost('GroupsPost');
 
-        if (Yii::app()->getRequest()->getIsPostRequest() && Yii::app()->getRequest()->getPost('GroupsPost')) {
-            $model->setAttributes(
-                Yii::app()->getRequest()->getPost('GroupsPost')
-            );
+        if (Yii::app()->getRequest()->getIsPostRequest() && $data !== null)
+        {
+            $model->setAttributes($data);
             $model->tags = Yii::app()->getRequest()->getPost('tags');
 
             if ($model->save()) {

@@ -366,16 +366,14 @@
 
 <?php endif; ?>
 
-<?php
-$this->widget(
+<?php $this->widget(
     'bootstrap.widgets.TbButton',
     [
         'buttonType' => 'submit',
         'context'    => 'primary',
-        'label'      => $model->isNewRecord ? Yii::t('GroupsModule.groups', 'Create post and continue') : Yii::t(
-                'GroupsModule.groups',
-                'Save post and continue'
-            ),
+        'label'      => $model->isNewRecord
+            ? Yii::t('GroupsModule.groups', 'Create post and continue')
+            : Yii::t('GroupsModule.groups', 'Save post and continue'),
     ]
 ); ?>
 
@@ -385,10 +383,9 @@ $this->widget(
     [
         'buttonType'  => 'submit',
         'htmlOptions' => ['name' => 'submit-type', 'value' => 'index'],
-        'label'       => $model->isNewRecord ? Yii::t('GroupsModule.groups', 'Create post and close') : Yii::t(
-                'GroupsModule.groups',
-                'Save post and close'
-            ),
+        'label'       => $model->isNewRecord
+            ? Yii::t('GroupsModule.groups', 'Create post and close')
+            : Yii::t('GroupsModule.groups', 'Save post and close'),
     ]
 ); ?>
 

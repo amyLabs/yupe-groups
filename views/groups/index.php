@@ -25,7 +25,7 @@ $this->breadcrumbs = [Yii::t('GroupsModule.groups', 'Groups')];
         <?php $this->endWidget(); ?>
     </div>
     <div class="col-sm-3">
-        <?= CHtml::link(
+        <?php echo CHtml::link(
             "<i class='glyphicon glyphicon-pencil'></i> " . Yii::t('GroupsModule.groups', 'Create group'),
             ['/groups/groups/create'],
             ['class' => 'btn btn-success']);

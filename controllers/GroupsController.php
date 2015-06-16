@@ -48,12 +48,7 @@ class GroupsController extends \yupe\components\controllers\FrontController
                     yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
                     Yii::t('GroupsModule.groups', 'Group was added!')
                 );
-                $this->redirect(
-                    (array)Yii::app()->getRequest()->getPost(
-                        'submit-type',
-                        ['index']
-                    )
-                );
+                $this->redirect(['/groups/groups/index']);
             }
         }
         $this->render('create', ['model' => $model]);

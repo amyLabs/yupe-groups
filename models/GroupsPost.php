@@ -15,7 +15,7 @@
 /**
  * This is the model class for table "groups_post".
  *
- * The followings are the available columns in table 'post':
+ * The followings are the available columns in table 'groups_post':
  * @property string $id
  * @property string $group_id
  * @property string $create_user_id
@@ -54,43 +54,24 @@ Yii::import('application.modules.comment.components.ICommentable');
 class GroupsPost extends yupe\models\YModel implements ICommentable
 {
     /**
-     *
+     * Статусы
      */
     const STATUS_DRAFT = 0;
-    /**
-     *
-     */
     const STATUS_PUBLISHED = 1;
-    /**
-     *
-     */
     const STATUS_SCHEDULED = 2;
-    /**
-     *
-     */
     const STATUS_MODERATED = 3;
-
-    /**
-     *
-     */
     const STATUS_DELETED = 4;
 
     /**
-     *
+     * Доступ
      */
     const ACCESS_PUBLIC = 1;
-    /**
-     *
-     */
     const ACCESS_PRIVATE = 2;
 
     /**
-     *
+     * Комментарии
      */
     const COMMENT_YES = 1;
-    /**
-     *
-     */
     const COMMENT_NO = 0;
 
     /**
@@ -159,7 +140,7 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
             [
                 'title, slug, link, keywords, description, publish_time',
                 'filter',
-                'filter' => [$obj = new CHtmlPurifier(), 'purify']
+                'filter' => [new CHtmlPurifier(), 'purify']
             ],
             ['slug', 'unique'],
             ['tags', 'safe'],
@@ -760,7 +741,7 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
 
         $this->setAttributes($post);
         $this->setTags($post['tags']);
-        $this->publish_time = date('d-m-Y h:i');
+        $this->publish_time = date('d-m-Y H:i');
         $this->status = $post['status'] == self::STATUS_DRAFT ? self::STATUS_DRAFT : $group->post_status;
 
         return $this->save();
@@ -855,10 +836,10 @@ class GroupsPost extends yupe\models\YModel implements ICommentable
 
         try {
             $this->status = self::STATUS_PUBLISHED;
-            $this->publish_time = date('d-m-Y h:i');
+            $this->publish_time = date('d-m-Y H:i');
             if ($this->save()) {
                 Yii::app()->eventManager->fire(
-                    GroupEvents::POST_PUBLISH,
+                    GroupEvents::GROUP_POST_PUBLISH,
                     new GroupPostPublishEvent($this, Yii::app()->getUser())
                 );
             }

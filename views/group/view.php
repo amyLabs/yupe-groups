@@ -39,31 +39,31 @@ $this->breadcrumbs = [
 
             <div class="group-description-info">
 
-            <span class="group-description-owner">
-                <i class="glyphicon glyphicon-user"></i>
-                <?php echo Yii::t('GroupsModule.groups', 'Created'); ?>:
-                <strong>
-                    <?php $this->widget(
-                        'application.modules.user.widgets.UserPopupInfoWidget',
-                        [
-                            'model' => $group->createUser
-                        ]
+                <span class="group-description-owner">
+                    <i class="glyphicon glyphicon-user"></i>
+                    <?php echo Yii::t('GroupsModule.groups', 'Created'); ?>:
+                    <strong>
+                        <?php $this->widget(
+                            'application.modules.user.widgets.UserPopupInfoWidget',
+                            [
+                                'model' => $group->createUser
+                            ]
+                        ); ?>
+                    </strong>
+                </span>
+
+                <span class="group-description-datetime">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                    <?php echo Yii::app()->getDateFormatter()->formatDateTime($group->create_time, "short", "short"); ?>
+                </span>
+
+                <span class="group-description-posts">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                    <?php echo CHtml::link(
+                        count($group->posts),
+                        ['/groups/groupsPost/posts', 'slug' => CHtml::encode($group->slug)]
                     ); ?>
-                </strong>
-            </span>
-
-            <span class="group-description-datetime">
-                <i class="glyphicon glyphicon-calendar"></i>
-                <?php echo Yii::app()->getDateFormatter()->formatDateTime($group->create_time, "short", "short"); ?>
-            </span>
-
-            <span class="group-description-posts">
-                <i class="glyphicon glyphicon-pencil"></i>
-                <?php echo CHtml::link(
-                    count($group->posts),
-                    ['/group/post/group/', 'slug' => CHtml::encode($group->slug)]
-                ); ?>
-            </span>
+                </span>
 
             </div>
 
@@ -79,7 +79,17 @@ $this->breadcrumbs = [
     </div>
 </div>
 
-<?php $this->widget('application.modules.groups.widgets.LastPostsOfGroupWidget', ['groupId' => $group->id, 'limit' => 10]); ?>
+<br/>
+<?php echo CHtml::link(
+    "<i class='glyphicon glyphicon-pencil'></i> " . Yii::t('GroupsModule.groups', 'Add a post'),
+    ['/groups/groupsPost/create', 'slug' => $group->slug],
+    ['class' => 'btn btn-success']);
+?>
+
+<?php $this->widget(
+    'application.modules.groups.widgets.LastPostsOfGroupWidget',
+    ['groupId' => $group->id, 'limit' => 10]
+); ?>
 
 <br/>
 
